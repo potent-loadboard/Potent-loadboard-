@@ -1,38 +1,23 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
+const message = document.createElement('div')
+message.style.cssText = 'padding:24px;font-family:Arial;white-space:pre-wrap'
+message.textContent = 'POTENT: Loading App.jsx...'
+document.body.appendChild(message)
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { error: null }
-  }
-
-  static getDerivedStateFromError(error) {
-    return { error }
-  }
-
-  componentDidCatch(error, info) {
-    console.error(error, info)
-  }
-
-  render() {
-    if (this.state.error) {
-      return (
-        <div style={{ padding: '24px', fontFamily: 'monospace', whiteSpace: 'pre-wrap' }}>
-          <h2>POTENT APP ERROR</h2>
-          <div>{this.state.error.message}</div>
-          <pre>{this.state.error.stack}</pre>
-        </div>
-      )
-    }
-
-    return this.props.children
-  }
-}
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <ErrorBoundary>
-    <App />
-  </ErrorBoundary>
-)
+import('./App.jsx')
+  .then(({ default: App }) => {
+    message.textContent = 'POTENT: App.jsx loaded successfully.'
+    
+    import('react').then((React) => {
+      import('react-dom/client').then(({ createRoot }) => {
+        createRoot(document.getElementById('root')).render(
+          React.createElement(App)
+        )
+      })
+    })
+  })
+  .catch((error) => {
+    message.innerHTML = `
+      <h2>POTENT APP ERROR</h2>
+      <pre>${error?.stack || error?.message || error}</pre>
+    `
+  })
