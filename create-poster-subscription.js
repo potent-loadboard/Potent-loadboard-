@@ -25,4 +25,4 @@ exports.handler = async function(event) {
  cancel_url: `${base}?poster=cancelled`,
  });
  return { statusCode: 200, headers: {'Content-Type':'application/json'}, body: JSON.string } catch (e) { return { statusCode: 500, body: JSON.stringify({ error: e.message }) }; }
-;
+};
