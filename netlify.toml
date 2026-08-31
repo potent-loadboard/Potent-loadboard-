@@ -1,9 +1,9 @@
 [build]
-  command = "npm run build"
   publish = "dist"
+  command = "npm run build"
 
-[functions]
-  directory = "netlify/functions"
+[build.environment]
+  NODE_VERSION = "18"
 
 [[redirects]]
   from = "/api/create-checkout-session"
@@ -12,7 +12,27 @@
 
 [[redirects]]
   from = "/api/stripe-webhook"
-  to = "/.netlify/functions/stripe-webhook"
+  to = "/.netlify/functions/master-webhook"
+  status = 200
+
+[[redirects]]
+  from = "/api/create-poster-subscription"
+  to = "/.netlify/functions/create-poster-subscription"
+  status = 200
+
+[[redirects]]
+  from = "/api/create-driver-access"
+  to = "/.netlify/functions/create-driver-access"
+  status = 200
+
+[[redirects]]
+  from = "/api/check-driver-access"
+  to = "/.netlify/functions/check-driver-access"
+  status = 200
+
+[[redirects]]
+  from = "/api/send-message"
+  to = "/.netlify/functions/send-message"
   status = 200
 
 [[redirects]]
@@ -31,6 +51,19 @@
   status = 200
 
 [[redirects]]
+  from = "/api/flag-posting"
+  to = "/.netlify/functions/flag-posting"
+  status = 200
+
+[[redirects]]
+  from = "/api/renew-posting"
+  to = "/.netlify/functions/renew-posting"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+[functions]
+  node_bundler = "esbuild"
