@@ -23,6 +23,7 @@ exports.handler = async function(event) {
         },
       }, quantity: 1 }],
       metadata: { email, name: name||'', phone: phone||'', company: company||'', type: 'poster_subscription' },
+      subscription_data: { trial_period_days: 10 },
       success_url: `${base}?poster=success&email=${encodeURIComponent(email)}`,
       cancel_url: `${base}?poster=cancelled`,
     });
